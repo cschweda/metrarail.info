@@ -7,20 +7,29 @@
           <v-progress-circular indeterminate color="primary"></v-progress-circular>
         </div>
         <div v-else v-for="(alert) in alerts" :key="alert.id" class="mt-4">
-          <div
-            style="color: #888; font-weight: bold;"
-          >{{time(alert.alert.active_period[0].start.low)}}</div>
-          <div>{{alert.alert.header_text.translation[0].text}}</div>
+          <v-card color="red darken-3" class="white--text">
+            <v-card-title primary-title>
+              <div>{{fullTime(alert.alert.active_period[0].start.low)}}</div>
+            </v-card-title>
+            <div class="pl-3 pr-3 pb-3">{{alert.alert.header_text.translation[0].text}}</div>
+          </v-card>
         </div>
         <h1 class="rule mt-5">Positions</h1>
         <div v-if="isLoadingPositions">
           <v-progress-circular indeterminate color="primary"></v-progress-circular>
         </div>
-        <div
-          v-else
-          v-for="(position) in positions"
-          :key="position.id"
-        >{{position.vehicle.trip.trip_id}}</div>
+        <div v-else v-for="(position) in positions" :key="position.id" class="mt-3">
+          <v-card color="white" class="black--text">
+            <v-card-title primary-title>
+              <div>
+                <div class="headline">{{position.vehicle.trip.trip_id}}</div>
+              </div>
+            </v-card-title>
+            <div
+              class="pl-3 pr-3 pb-3"
+            >Lat: {{position.vehicle.position.latitude}} / Long: {{position.vehicle.position.longitude}}</div>
+          </v-card>
+        </div>
         <h1 class="rule mt-5">Trip Updates</h1>
         <div v-if="isLoadingTripUpdates">
           <v-progress-circular indeterminate color="primary"></v-progress-circular>
@@ -64,8 +73,11 @@ export default {
         this.isLoadingPositions = false;
       });
     },
-    time(timeObj) {
+    fullTime(timeObj) {
       return moment(timeObj).format("dddd, MMMM DD, YYYY LT");
+    },
+    dayTime(timeObj) {
+      return moment(timeObj).format("LT");
     }
   },
   data() {
