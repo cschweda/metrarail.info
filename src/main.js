@@ -8,7 +8,6 @@ import store from "./store";
 import TreeView from "vue-json-tree-view";
 Vue.use(TreeView);
 
-import Vue from "vue";
 import VueAnalytics from "vue-analytics";
 
 Vue.use(VueAnalytics, {
