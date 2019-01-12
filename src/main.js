@@ -7,7 +7,7 @@ import store from "./store";
 
 import TreeView from "vue-json-tree-view";
 Vue.use(TreeView);
-
+const isProd = process.env.NODE_ENV === "production";
 import VueAnalytics from "vue-analytics";
 
 Vue.use(VueAnalytics, {
