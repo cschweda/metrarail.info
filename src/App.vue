@@ -10,7 +10,7 @@
         flat
         color="blue-grey"
         class="white--text"
-        href="https://github.com/cschweda/metrarail.info.dev"
+        href="https://github.com/cschweda/metrarail.info"
       >Github
         <v-icon right dark>open_in_new</v-icon>
       </v-btn>
