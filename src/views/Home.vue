@@ -26,8 +26,12 @@
               </div>
             </v-card-title>
             <div
-              class="pl-3 pr-3 pb-3"
+              class="pl-3 pr-3 pb-1"
             >Lat: {{position.vehicle.position.latitude}} / Long: {{position.vehicle.position.longitude}}</div>
+            <div class="pl-3 pb-3" style="font-size: 10px; text-transform: uppercase">
+              <span style="color: #444 !important; font-weight: 900">Updated:&nbsp;</span>
+              <span>{{dayTime(position.vehicle.timestamp.low)}}</span>
+            </div>
           </v-card>
         </div>
         <h1 class="rule mt-5">Trip Updates</h1>
