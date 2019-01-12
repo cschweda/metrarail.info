@@ -6,6 +6,14 @@
         <span class="font-weight-light">INFO TEST</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
+      <v-btn
+        flat
+        color="blue-grey"
+        class="white--text"
+        href="https://github.com/cschweda/metrarail.info.dev"
+      >Github
+        <v-icon right dark>open_in_new</v-icon>
+      </v-btn>
     </v-toolbar>
 
     <v-content>
