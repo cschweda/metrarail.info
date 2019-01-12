@@ -26,28 +26,40 @@
 <script>
 // @ is an alias to /src
 import axios from "axios";
-
+import config from "@/config";
+import moment from "moment";
 export default {
-  created() {
-    this.isLoadingAlerts = true;
-    this.isLoadingPositions = true;
-    this.isLoadingTripUpdates = true;
-    axios.get("/.netlify/functions/tripUpdates").then(res => {
-      this.tripUpdates = res.data;
-      this.isLoadingTripUpdates = false;
-    });
-    axios.get("/.netlify/functions/alerts").then(res => {
-      this.alerts = res.data;
-      this.isLoadingAlerts = false;
-    });
+  mounted() {
+    this.interval = setInterval(() => {
+      this.getFeeds();
+    }, config.pollingInterval);
 
-    axios.get("/.netlify/functions/positions").then(res => {
-      this.positions = res.data;
-      this.isLoadingPositions = false;
-    });
+    this.getFeeds();
+  },
+  methods: {
+    getFeeds() {
+      console.log("Fetching feeds..." + moment().format("hh:mm:ss"));
+      this.isLoadingAlerts = true;
+      this.isLoadingPositions = true;
+      this.isLoadingTripUpdates = true;
+      axios.get("/.netlify/functions/tripUpdates").then(res => {
+        this.tripUpdates = res.data;
+        this.isLoadingTripUpdates = false;
+      });
+      axios.get("/.netlify/functions/alerts").then(res => {
+        this.alerts = res.data;
+        this.isLoadingAlerts = false;
+      });
+
+      axios.get("/.netlify/functions/positions").then(res => {
+        this.positions = res.data;
+        this.isLoadingPositions = false;
+      });
+    }
   },
   data() {
     return {
+      interval: null,
       tripUpdates: "",
       alerts: "",
       positions: "",

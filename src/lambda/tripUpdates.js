@@ -1,3 +1,5 @@
+const baseURL = "https://gtfsapi.metrarail.com";
+const feedURL = "/gtfs/tripUpdates";
 const axios = require("axios");
 const btoa = require("btoa");
 require("dotenv").config();
@@ -7,7 +9,7 @@ exports.handler = (event, context, callback) => {
     "Basic " +
     btoa(process.env.METRA_ACCESS_KEY + ":" + process.env.METRA_SECRET_KEY);
   axios
-    .get("https://gtfsapi.metrarail.com/gtfs/tripUpdates", {
+    .get(`${baseURL}${feedURL}`, {
       headers: {
         "cache-control": "no-cache",
         Authorization: basicAuth
