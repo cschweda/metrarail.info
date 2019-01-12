@@ -2,10 +2,10 @@
   <div>
     <v-layout row wrap>
       <v-container>
-        <div
-          style="font-weight: 900; color: #888;"
-          class="text-xs-right"
-        >Last Refreshed: {{lastRefreshed}}</div>
+        <div style="font-weight: 900;" class="text-xs-right">
+          Last Refreshed: {{lastRefreshed}}
+          <div style="font-size: 12px;  color: #888;">(Automatically refreshes every 60 seconds)</div>
+        </div>
         <h1 class="rule mt-2">Alerts</h1>
         <div v-if="isLoadingAlerts">
           <v-progress-circular indeterminate color="primary"></v-progress-circular>

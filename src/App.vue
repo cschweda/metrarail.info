@@ -3,7 +3,7 @@
     <v-toolbar app>
       <v-toolbar-title class="headline text-uppercase">
         <span>METRARAIL.</span>
-        <span class="font-weight-light">INFO</span>
+        <span class="font-weight-light">INFO TEST</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
     </v-toolbar>
