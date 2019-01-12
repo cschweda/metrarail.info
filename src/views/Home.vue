@@ -2,19 +2,16 @@
   <div>
     <v-layout row wrap>
       <v-container>
-        <!-- <div style="font-weight: 900;" class="text-xs-right">
-          Last Refreshed: {{lastRefreshed}}
-          <div style="font-size: 12px;  color: #888;">(Automatically refreshes every 60 seconds)</div>
-        </div>-->
         <h1 class="rule mt-2">Alerts</h1>
         <div v-if="isLoadingAlerts">
           <v-progress-circular indeterminate color="primary"></v-progress-circular>
         </div>
-        <div
-          v-else
-          v-for="(alert) in alerts"
-          :key="alert.id"
-        >{{alert.alert.header_text.translation[0].text}}</div>
+        <div v-else v-for="(alert) in alerts" :key="alert.id" class="mt-4">
+          <div
+            style="color: #888; font-weight: bold;"
+          >{{time(alert.alert.active_period[0].start.low)}}</div>
+          <div>{{alert.alert.header_text.translation[0].text}}</div>
+        </div>
         <h1 class="rule mt-5">Positions</h1>
         <div v-if="isLoadingPositions">
           <v-progress-circular indeterminate color="primary"></v-progress-circular>
@@ -38,14 +35,11 @@
 <script>
 // @ is an alias to /src
 import axios from "axios";
-import config from "@/config";
+import _ from "lodash";
 import moment from "moment";
+import config from "@/config";
 export default {
   mounted() {
-    // this.interval = setInterval(() => {
-    //   this.getFeeds();
-    // }, config.pollingInterval);
-
     this.getFeeds();
   },
   methods: {
@@ -69,6 +63,9 @@ export default {
         this.positions = res.data;
         this.isLoadingPositions = false;
       });
+    },
+    time(timeObj) {
+      return moment(timeObj).format("dddd, MMMM DD, YYYY LT");
     }
   },
   data() {
