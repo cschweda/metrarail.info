@@ -2,10 +2,10 @@
   <div>
     <v-layout row wrap>
       <v-container>
-        <div style="font-weight: 900;" class="text-xs-right">
+        <!-- <div style="font-weight: 900;" class="text-xs-right">
           Last Refreshed: {{lastRefreshed}}
           <div style="font-size: 12px;  color: #888;">(Automatically refreshes every 60 seconds)</div>
-        </div>
+        </div>-->
         <h1 class="rule mt-2">Alerts</h1>
         <div v-if="isLoadingAlerts">
           <v-progress-circular indeterminate color="primary"></v-progress-circular>
@@ -42,9 +42,9 @@ import config from "@/config";
 import moment from "moment";
 export default {
   mounted() {
-    this.interval = setInterval(() => {
-      this.getFeeds();
-    }, config.pollingInterval);
+    // this.interval = setInterval(() => {
+    //   this.getFeeds();
+    // }, config.pollingInterval);
 
     this.getFeeds();
   },
