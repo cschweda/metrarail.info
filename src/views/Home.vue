@@ -14,7 +14,12 @@
             <div class="pl-3 pr-3 pb-3">{{alert.alert.header_text.translation[0].text}}</div>
           </v-card>
         </div>
+
         <h1 class="rule mt-5">Positions</h1>
+        <div v-if="positions.length > 0 && tripUpdates.length > 0">
+          <snapshot :positions="positions" :tripUpdates="tripUpdates"></snapshot>
+        </div>
+
         <div v-if="isLoadingPositions">
           <v-progress-circular indeterminate color="primary"></v-progress-circular>
         </div>
@@ -28,18 +33,20 @@
             <div
               class="pl-3 pr-3 pb-1"
             >Lat: {{position.vehicle.position.latitude}} / Long: {{position.vehicle.position.longitude}}</div>
-            <div class="pl-3 pb-3" style="font-size: 10px; text-transform: uppercase">
-              <span style="color: #444 !important; font-weight: 900">Updated:&nbsp;</span>
-              <span>{{dayTime(position.vehicle.timestamp.low)}}</span>
+            <div class="pl-3 pb-3 pr-3" style="font-size: 10px; text-transform: uppercase">
+              <div
+                style="color: #444 !important; font-weight: 900; border-bottom: 1px solid #ccc; padding-bottom: 3px; margin-bottom: 12px"
+                class="pt-1"
+              >Trip updates:&nbsp;</div>
+              <div class="mt-3">{{tripUpdate(position.vehicle.trip.trip_id, 'status')}}</div>
+
+              <div
+                style="margin-top: 15px !important;color: #444 !important; font-weight: 900"
+                class="text-xs-right pr-3"
+              >Position last updated:&nbsp;{{dayTime(position.vehicle.timestamp.low)}}</div>
             </div>
           </v-card>
         </div>
-        <h1 class="rule mt-5">Trip Updates</h1>
-        <div v-if="isLoadingTripUpdates">
-          <v-progress-circular indeterminate color="primary"></v-progress-circular>
-        </div>
-        <div v-else v-for="(tripUpdate) in tripUpdates" :key="tripUpdate.id">{{tripUpdate.id}}</div>
-        <!-- <tree-view :data="tripUpdates" :options="{maxDepth: 3}"></tree-view> -->
       </v-container>
     </v-layout>
   </div>
@@ -48,18 +55,21 @@
 <script>
 // @ is an alias to /src
 import axios from "axios";
-import _ from "lodash";
 import moment from "moment";
 import config from "@/config";
+import Snapshot from "@/components/Snapshot";
 export default {
-  mounted() {
+  components: {
+    Snapshot
+  },
+  created() {
     this.getFeeds();
   },
   methods: {
     getFeeds() {
       this.lastRefreshed = moment().format("hh:mm:ss");
-      this.$forceUpdate();
-      console.log("Fetching feeds..." + this.lastRefreshed);
+
+      console.log("Fetching ...");
       this.isLoadingAlerts = true;
       this.isLoadingPositions = true;
       this.isLoadingTripUpdates = true;
@@ -82,6 +92,18 @@ export default {
     },
     dayTime(timeObj) {
       return moment(timeObj).format("LT");
+    },
+    tripUpdate(id, option) {
+      if (this.tripUpdates.length) {
+        let result = this.tripUpdates.find(tripId => tripId.id === id);
+        this.currentTrip = result;
+        if (result) {
+          return result;
+        } else {
+          this.currentTrip = null;
+          return "No update.";
+        }
+      }
     }
   },
   data() {
@@ -93,11 +115,11 @@ export default {
       isLoadingAlerts: false,
       isLoadingPositions: false,
       isLoadingTripUpdates: false,
-      lastRefreshed: null
+      lastRefreshed: null,
+      currentTrip: null
     };
   },
-  name: "home",
-  components: {}
+  name: "home"
 };
 </script>
 <style>
