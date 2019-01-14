@@ -93,7 +93,7 @@ export default {
     dayTime(timeObj) {
       return moment(timeObj).format("LT");
     },
-    tripUpdate(id, option) {
+    tripUpdate(id) {
       if (this.tripUpdates.length) {
         let result = this.tripUpdates.find(tripId => tripId.id === id);
         this.currentTrip = result;

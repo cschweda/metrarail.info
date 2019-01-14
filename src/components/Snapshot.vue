@@ -59,7 +59,7 @@ export default {
       infoWindowPos: null,
       infoWinOpen: false,
       currentMidx: null,
-      //optional: offset infowindow so it visually sits nicely on top of our marker
+
       infoOptions: {
         pixelOffset: {
           width: 0,
